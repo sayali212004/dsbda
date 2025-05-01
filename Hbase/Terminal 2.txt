@@ -1,19 +1,20 @@
-DROP TABLE IF EXISTS student_hive;
+# Start Hive
+hive
 
-CREATE EXTERNAL TABLE student_hive (
-    key STRING,
-    name STRING,
-    branch STRING,
-    math INT,
-    physics INT
+# Create external table mapped to HBase table
+CREATE EXTERNAL TABLE stud(
+    key string,
+    name string,
+    age string
 )
 STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
 WITH SERDEPROPERTIES (
-    "hbase.columns.mapping" = ":key,info:name,info:branch,marks:math,marks:physics"
+    "hbase.columns.mapping" = ":key,info:name,info:age"
 )
-TBLPROPERTIES ("hbase.table.name" = "student_hbase");
+TBLPROPERTIES ("hbase.table.name" = "student");
 
+# Query data
+SELECT * FROM stud;
 
-SELECT * FROM student_hive;
-1   John   CSE   85   90
-2   Alice  ECE   78   88
+# Insert new record (will be stored in HBase)
+INSERT INTO stud VALUES ('3','Ankit','20');
