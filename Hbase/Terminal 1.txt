@@ -1,13 +1,18 @@
 hbase shell
 
 
-create 'student_hbase', 'info', 'marks'
-put 'student_hbase', '1', 'info:name', 'John'
-put 'student_hbase', '1', 'info:branch', 'CSE'
-put 'student_hbase', '1', 'marks:math', '85'
-put 'student_hbase', '1', 'marks:physics', '90'
+# Start HBase services
+sudo service hbase-master start
+sudo service hbase-regionserver start
 
-put 'student_hbase', '2', 'info:name', 'Alice'
-put 'student_hbase', '2', 'info:branch', 'ECE'
-put 'student_hbase', '2', 'marks:math', '78'
-put 'student_hbase', '2', 'marks:physics', '88'
+# Enter HBase shell
+hbase shell
+
+# Create table and insert data
+create 'student', 'info'
+put 'student', '1', 'info:name', 'Rahul'
+put 'student', '1', 'info:age', '21'
+put 'student', '2', 'info:name', 'Dhiraj'
+
+# Verify data
+scan 'student'
